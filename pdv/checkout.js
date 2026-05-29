@@ -10,7 +10,7 @@ function renderResumo() {
 
   carrinho.forEach(item => {
     const prod = PRODUTOS.find(p => p.id === item.id);
-    const sub  = prod.preco * item.qtd;
+    const sub = prod.preco * item.qtd;
     total += sub;
 
     const linha = document.createElement('div');
@@ -33,7 +33,7 @@ const CUPONS = {
 
 function aplicarCupom() {
   const codigo =
-  document.getElementById('cupomInput').value.trim().toUpperCase();
+    document.getElementById('cupomInput').value.trim().toUpperCase();
 
   const erroCupom = document.getElementById('erroCupom');
   const sucessoCupom = document.getElementById('sucessoCupom');
@@ -42,7 +42,7 @@ function aplicarCupom() {
   sucessoCupom.style.display = 'none';
 
   if (!codigo) {
-    erroCupom.textContent ='Digite um cupom!';
+    erroCupom.textContent = 'Digite um cupom!';
     erroCupom.style.display = 'block';
     return;
   }
@@ -57,7 +57,7 @@ function aplicarCupom() {
   desconto = CUPONS[codigo];
 
   const carrinho = getCarrinho();
-  const total = carrinho.reduce((soma,item) => {
+  const total = carrinho.reduce((soma, item) => {
     const prod = PRODUTOS.find(p => p.id === item.id);
     return soma + prod.preco * item.qtd;
   }, 0);
@@ -66,33 +66,24 @@ function aplicarCupom() {
   const totalFinal = total - valorDesc;
 
   document.getElementById('valorDesconto').textContent = '- ' +
-  formatarMoeda(valorDesc);
+    formatarMoeda(valorDesc);
   document.getElementById('totalFinal').textContent =
-  formatarMoeda(totalFinal);
+    formatarMoeda(totalFinal);
   document.getElementById('linhaDesconto').style.display = 'flex';
   document.getElementById('linhaTotalFinal').style.display = 'flex';
 
-  sucessoCupom.textContent = 'cupom aplicado! ' + (desconto * 100) +'% de desconto.';
+  sucessoCupom.textContent = 'cupom aplicado! ' + (desconto * 100) + '% de desconto.';
   sucessoCupom.style.display = 'block';
 }
 
-let total = carrinho.reduce((soma, item) => {
-  const prod = PRODUTOS.find(p => p.id === item.id);
-  return soma + prod.preco * item.qtd;
-}, 0);
-
-const totalFinal = total - (total * desconto);
-
-document.getElementById('reciboTotal').textContent = formatarMoeda(totalFinal);
-
 // Valida os campos do formulário antes de confirmar
 function validarCampos() {
-  const nome     = document.getElementById('nome').value.trim();
-  const email    = document.getElementById('email').value.trim();
-  const cpf      = document.getElementById('cpf').value.trim();
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const cpf = document.getElementById('cpf').value.trim();
   const telefone = document.getElementById('telefone').value.trim();
 
-  if (!nome)     return 'Por favor, informe o nome completo.';
+  if (!nome) return 'Por favor, informe o nome completo.';
   if (!email || !email.includes('@')) return 'Por favor, informe um e-mail válido.';
   if (cpf.length < 11) return 'Por favor, informe o CPF completo.';
   if (telefone.length < 10) return 'Por favor, informe o telefone completo.';
@@ -106,8 +97,8 @@ function finalizarPedido() {
   const divErro = document.getElementById('erroCampos');
 
   if (erro) {
-    divErro.textContent    = '⚠️ ' + erro;
-    divErro.style.display  = 'block';
+    divErro.textContent = '⚠️ ' + erro;
+    divErro.style.display = 'block';
     return;
   }
 
@@ -122,12 +113,20 @@ function finalizarPedido() {
 
 
   // Lê os dados do formulário
-  const nome      = document.getElementById('nome').value.trim();
-  const email     = document.getElementById('email').value.trim();
-  const pagamento = document.querySelector('input[name="pagmento"]:checked').value;
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const pagamentoSelecionado =
+    document.querySelector('input[name="pagamento"]:checked');
 
-  document.getElementById('reciboPagamento').textContent =
-  mensagemPagamento[pagamento];
+  if (!pagamentoSelecionado) {
+    divErro.textContent = '⚠️ Selecione uma forma de pagamento.';
+    divErro.style.display = 'block';
+    return;
+  }
+
+  const pagamento = pagamentoSelecionado.value;
+
+
 
   const labels = { credito: 'Cartão de crédito', pix: 'PIX', boleto: 'Boleto bancário' };
 
@@ -139,7 +138,7 @@ function finalizarPedido() {
 
   carrinho.forEach(item => {
     const prod = PRODUTOS.find(p => p.id === item.id);
-    const sub  = prod.preco * item.qtd;
+    const sub = prod.preco * item.qtd;
     total += sub;
 
     const linha = document.createElement('div');
@@ -151,12 +150,19 @@ function finalizarPedido() {
     divItensRecibo.appendChild(linha);
   });
 
-  document.getElementById('reciboCliente').textContent   = `Cliente: ${nome} — ${email}`;
-  document.getElementById('reciboTotal').textContent     = formatarMoeda(total);
-  document.getElementById('reciboPagamento').textContent = `Forma de pagamento: ${labels[pagamento]}`;
+const totalFinal = total - (total * desconto);
+
+document.getElementById('reciboCliente').textContent =
+  `Cliente: ${nome} — ${email}`;
+
+document.getElementById('reciboTotal').textContent =
+  formatarMoeda(totalFinal);
+
+document.getElementById('reciboPagamento').textContent =
+  mensagemPagamento[pagamento];
 
   // Exibe o recibo e esconde o formulário
-  document.querySelector('main').style.display   = 'none';
+  document.querySelector('main').style.display = 'none';
   document.getElementById('recibo').style.display = 'flex';
 
   // Limpa o carrinho após a compra

@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechStore - Carrinho</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>TechStore — Carrinho</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    
-    <header>
-        <span class="logo">📱 TechStore</span>
-        <a class="btn-voltar" href="loja.html">⬅️ Continuar Comprando</a>
-    </header>
 
-    <main>
-        <h1>Carrinho</h1>
-        <div id="listaCarrinho"></div>
+  <header>
+    <span class="logo">🖥 TechStore</span>
+    <a class="btn-voltar" href="loja.html">← Continuar comprando</a>
+  </header>
 
-        <div class="resumo" id="resumo" style="display: none;">
-            <div class="resumo-linha">
-                <span>Subtotal</span>
-                <span id="subtotal"></span>
-            </div>
-            <div class="resumo-linha destaque">
-                <span>Total</span>
-                <span id="Total"></span>
-            </div>
-            <a class="btn-primary" href="checkout.html"> Finalizar Pedido ➡️</a>
-        </div>
-    </main>
+  <main>
+    <h1>Carrinho</h1>
+    <div id="listaCarrinho"></div>
 
-    <script src="produtos.js"></script>
-    <script src="carrinho.js"></script>
+    <div class="resumo" id="resumo" style="display:none">
+      <div class="resumo-linha">
+        <span>Subtotal</span>
+        <span id="subtotal"></span>
+      </div>
+      <div class="resumo-linha destaque">
+        <span>Total</span>
+        <span id="total"></span>
+      </div>
+      <a class="btn-primary" href="checkout.html">Finalizar pedido →</a>
+    </div>
+  </main>
+
+  <script src="produtos.js"></script>
+  <script src="carrinho.js"></script>
 </body>
 </html>
